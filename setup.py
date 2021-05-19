@@ -2,14 +2,14 @@ from setuptools import setup
 import setuptools
 
 setup(
-      name='irobo_cli',
+      name='boxconfig',
       version='1.0',
-      description='iRobo is command line executors',
+      description='Box Config is configuration manager',
       author='kb.arvind@gmail.com',
       license='MIT',
       packages=setuptools.find_packages(),
       zip_safe=False,
       entry_points = {
-        'console_scripts': ['pogu=irobo_cli.pogucli:bootstrapcli'],
+        'console_scripts': ['boxconfig=app.cli.configmanagercli:cli'],
         }
       )
