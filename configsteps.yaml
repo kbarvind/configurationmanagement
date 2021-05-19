@@ -1,0 +1,17 @@
+---
+
+vars:
+  name: arvind
+  place: Karur
+  
+steps:
+  - plugin: file
+    config:
+       path: /Users/kbarvind/Documents/Work/Lab
+       state: create
+       
+  - plugin: package
+    config:
+       name: apache2
+       state: present
+   
