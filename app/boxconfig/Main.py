@@ -14,7 +14,6 @@ class BoxConfig(object):
     '''
     classdocs
     '''
-
     def __init__(self, filepath):
         self.file = filepath
         self.filecontent = None
