@@ -38,6 +38,7 @@ class BoxConfig(object):
             self.filecontent = filehandler.readFile(self.file)
         except Exception:
             raise Exception("Error while reading file from " + self.file) from None
+        
     
     def parseyaml(self):
         try:
