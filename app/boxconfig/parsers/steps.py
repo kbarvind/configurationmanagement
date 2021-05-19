@@ -27,6 +27,9 @@ class StepParser(object):
             self.steps.append(step)
         
         print("Configurations contains "+str(len(self.steps))+" steps")
+        
+    def getsteps(self):
+        return self.steps
 
 
 
@@ -39,7 +42,10 @@ class Step():
         self.config = None
         self.validate()
         self.addConfig()
-        
+    
+    
+    def getplugin(self):
+        return self.plugin
         
     def validate(self):
         if 'plugin' not in self.step:

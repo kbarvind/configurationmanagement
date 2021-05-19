@@ -7,6 +7,7 @@ from app.utils.os.file import File, FileHandler
 from app.utils.yaml.parse import YamlParser
 from app.boxconfig.parsers.variable import VariableParser
 from app.boxconfig.parsers.steps import StepParser
+from app.boxconfig.executors.step import StepExecutor
 
 
 class BoxConfig(object):
@@ -52,3 +53,6 @@ class BoxConfig(object):
         
         stepparser = StepParser(self.configyaml)
         stepparser.process()
+        
+        stepexecutor = StepExecutor(stepparser)
+        stepexecutor.process()
