@@ -5,7 +5,7 @@ Created on 19-May-2021
 '''
 import click
 
-@cli.command()
+@click.command()
 @click.option("--file", "-f", help="configstepfile")
 def cli(file):
     if file is None:
