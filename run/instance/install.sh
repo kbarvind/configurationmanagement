@@ -5,4 +5,4 @@ cd ../../
 
 echo "Intsalling irobo"
 
-pip3.6 install .  
+pip3 install .  
