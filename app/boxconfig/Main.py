@@ -63,13 +63,12 @@ class BoxConfig(object):
         stepexecutor = StepExecutor(stepparser)
         stepexecutor.process()
         
+        
+    def testnativeprocess(self):
+        
         nativeprocessrequest = NativeProcessRequest()
         nativeprocessrequest.setcommand("apt-get update")
         
         native_process_executor = NativeProcessExecutor(nativeprocessrequest)
         response = native_process_executor.execute()
-        
         print(response.getstdout())
-        
-        
-        

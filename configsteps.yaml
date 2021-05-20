@@ -7,8 +7,9 @@ vars:
 steps:
   - plugin: file
     config:
-       path: /Users/kbarvind/Documents/Work/Lab
+       path: /Users/kbarvind/Documents/Work/Lab1
        state: create
+       mode: folder
        
   - plugin: package
     config:

@@ -71,7 +71,14 @@ class File(object):
         File.checkIfFIleExists(filepath)
         os.remove(filepath)
     
-        
+    @staticmethod
+    def touch(fname, times=None):
+        fhandle = open(fname, 'a')
+        try:
+            os.utime(fname, times)
+        finally:
+            fhandle.close()
+    
     @staticmethod
     def checkIfFIleExists(path: str):
         if not File.checkIfPathExists(path):

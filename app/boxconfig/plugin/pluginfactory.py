@@ -3,6 +3,7 @@ Created on 20-May-2021
 
 @author: kbarvind
 '''
+from builtins import staticmethod
 
 class BoxConfigPluginFactory(object):
     '''
@@ -10,23 +11,22 @@ class BoxConfigPluginFactory(object):
     '''
 
 
-    plugins = []
     registry = {}
-
-    def __init__(self):
-        self.registry = {}
-        self.plugins = []
+    plugins = []
     
-    def registerPlugin(self, pluginname, plugin):
-        if pluginname in self.registry:
+    @staticmethod
+    def registerPlugin( pluginname, plugin):
+        if pluginname in BoxConfigPluginFactory.registry:
             raise Exception("Plugin {} already exists".format(pluginname))
-        self.registry[pluginname] = plugin
-        self.plugins.append(pluginname)
-        
-    def getPlugin(self, pluginname):    
-        if pluginname not in self.registry:
-            raise Exception("Plugin {} does not exists".format(pluginname))
-        return self.registry[pluginname]()
+        BoxConfigPluginFactory.registry[pluginname] = plugin
+        BoxConfigPluginFactory.plugins.append(pluginname)
     
-    def getPlugins(self):
-        return self.plugins
+    @staticmethod 
+    def getPlugin( pluginname):
+        if pluginname not in BoxConfigPluginFactory.plugins:
+            raise Exception("Plugin {} does not exists".format(pluginname))
+        return BoxConfigPluginFactory.registry[pluginname]()
+    
+    @staticmethod
+    def getPlugins():
+        return BoxConfigPluginFactory.plugins

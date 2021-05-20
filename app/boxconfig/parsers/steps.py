@@ -58,5 +58,8 @@ class Step():
             return 
         self.config = self.step['config']
         
+    def getconfig(self):
+        return self.config
+        
         
         
