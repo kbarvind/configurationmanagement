@@ -11,7 +11,7 @@ steps:
        state: create
        mode: folder
        
-  - plugin: package
+  - plugin: package-apt
     config:
        name: apache2
        state: present
