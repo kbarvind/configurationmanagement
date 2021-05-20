@@ -7,14 +7,11 @@ import os
 import sys
 from builtins import staticmethod
 import json
-from codefreeze.utils.logging.log import LOGGER
-from codefreeze.utils.program.tcdecorator import typecheck
 
 class File(object):
     '''
     classdocs
     '''
-    log = LOGGER.getLogger(__name__)
 
     @staticmethod
     def getFilesinDirectory(dir_path,file_extension=None):
@@ -76,7 +73,6 @@ class File(object):
     
         
     @staticmethod
-    @typecheck
     def checkIfFIleExists(path: str):
         if not File.checkIfPathExists(path):
             raise Exception("Path {} does not exists".format(path))
