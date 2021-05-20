@@ -16,7 +16,7 @@ class BoxConfigPluginFactory(object):
     def __init__(self):
         self.registry = {}
         self.plugins = []
-        
+    
     def registerPlugin(self, pluginname, plugin):
         if pluginname in self.registry:
             raise Exception("Plugin {} already exists".format(pluginname))

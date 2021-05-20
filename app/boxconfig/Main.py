@@ -8,6 +8,8 @@ from app.utils.yaml.parse import YamlParser
 from app.boxconfig.parsers.variable import VariableParser
 from app.boxconfig.parsers.steps import StepParser
 from app.boxconfig.executors.step import StepExecutor
+from app.utils.module.moduleutil import ModuleUtils
+import app
 
 
 class BoxConfig(object):
@@ -47,6 +49,8 @@ class BoxConfig(object):
             raise Exception("Error while parsing yaml file from " + self.file + " : " + str(ex)) from None
     
     def process(self):
+        
+        ModuleUtils.loadModules(app)
         
         variableparser = VariableParser(self.configyaml)
         variableparser.process()

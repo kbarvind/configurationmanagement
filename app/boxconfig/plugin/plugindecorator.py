@@ -26,6 +26,7 @@ class Plugin(object):
     def __init__(self, func):
         self.classref = func
         self.classInstance = func()
+        self.pluginfactory = BoxConfigPluginFactory()
         self.register()
         
     def getName(self):
@@ -39,6 +40,6 @@ class Plugin(object):
         if not issubclass(self.classref, BoxConfigPlugin):
             raise Exception("Plugin {} not subclass of BoxConfigPlugin".format(processorclassname))
         logging.info("Registering Plugin {}".format(self.getName()))
-        BoxConfigPluginFactory.registerPlugin(self.getName(), self.classref)
+        self.pluginfactory.registerPlugin(self.getName(), self.classref)
         
     
