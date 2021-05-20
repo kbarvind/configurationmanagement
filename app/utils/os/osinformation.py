@@ -16,7 +16,7 @@ class OSInfo(object):
     
     @staticmethod
     def getPlatformLinuxDistribution():
-        return platform.linux_distribution().lower()
+        return platform.linux_distribution()
     
     @staticmethod
     def getPlatformRelease():
