@@ -71,9 +71,11 @@ class NativeProcessRequest():
     def setenvironment(self, environment):
         self.environment = environment
         
+    def addenvironment(self, environmentname, environmentvalue):
+        self.environment[environmentname] = environmentvalue
+        
     def getenvironment(self):
         return self.environment
-
 
 
 class NativeProcessResponse():
@@ -84,26 +86,26 @@ class NativeProcessResponse():
     exception = None
     containsexception = False
     
-    def setcontainsexception(self,containsexception):
+    def setcontainsexception(self, containsexception):
         self.containsexception = containsexception
         
     def getcontainsexception(self):
         return self.containsexception
     
-    def setexception(self,exception):
+    def setexception(self, exception):
         self.containsexception = True
         self.exception = exception
         
     def getexception(self):
         return self.exception
     
-    def setstdout(self,stdout):
+    def setstdout(self, stdout):
         self.stdout = stdout
         
     def getstdout(self):
         return self.stdout
     
-    def setstderr(self,stderr):
+    def setstderr(self, stderr):
         self.stderr = stderr
         
     def setretuencode(self, returncode):
