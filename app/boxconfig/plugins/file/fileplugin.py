@@ -31,6 +31,7 @@ class FilePlugin(BoxConfigPlugin):
         
         if fileexists:
             print("File "+path+" already available so skipping")
+            return
         
         mode = None
         
