@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ..
+cd ../../
 
 echo "Building project"
 
