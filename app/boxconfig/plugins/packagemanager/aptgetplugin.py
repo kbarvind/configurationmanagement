@@ -19,6 +19,8 @@ class AptGetPlugin(BoxConfigPlugin):
     
     def execute(self, **kwargs):
         config =  kwargs.get('config', {})
-        print(OSInfo.getPlatformRelease())
-        print(OSInfo.getPlatformSystem())
         
+        if OSInfo.getPlatformSystem() != 'linux':
+            raise Exception("package-apt can be applied only for linux debian platform")
+        
+        print(OSInfo.getPlatformLinuxDistribution())
