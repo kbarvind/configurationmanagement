@@ -6,7 +6,7 @@ Created on 20-May-2021
 import subprocess
 from app.utils.os.osinformation import OSInfo
 from sys import stdin, stderr, stdout
-
+import logging
 
 class NativeProcessRequest():
     
@@ -19,6 +19,13 @@ class NativeProcessRequest():
     cwd = None
     stdout = subprocess.PIPE
     stderr = subprocess.PIPE
+    stdin = None
+    
+    def setstdin(self,stdin):
+        self.stdin = stdin
+        
+    def getstdin(self):
+        return self.stdin
     
     def setcwd(self, cwd):
         self.cwd = cwd
@@ -82,6 +89,7 @@ class NativeProcessResponse():
     
     stdout = None
     stderr = None
+    stdin = None
     returncode = None
     exception = None
     containsexception = False
@@ -107,6 +115,9 @@ class NativeProcessResponse():
     
     def setstderr(self, stderr):
         self.stderr = stderr
+    
+    def getstderr(self):
+        return self.stderr
         
     def setretuencode(self, returncode):
         self.returncode = returncode
@@ -135,7 +146,8 @@ class NativeProcessExecutor(object):
             if path is not None:
                 pathString = OSInfo.getPathVariableSeprator().join(path)
                 environ['PATH'] = environ['PATH'] + OSInfo.getPathVariableSeprator() + pathString
-                
+            
+            logging.info("Executing command")
             self.process = subprocess.Popen(
                 command,
                 shell=True,
@@ -146,7 +158,8 @@ class NativeProcessExecutor(object):
                 stderr=self.request.getstderr(),
                 stdin=subprocess.PIPE,
             )
-            stdout, stderr = self.process.communicate(input=stdin, timeout=timeout)
+            
+            stdout, stderr = self.process.communicate(input=self.request.getstdin(), timeout=timeout)
             self.response.setstdout(stdout)
             self.response.setstderr(stderr)
             self.response.setretuencode(self.process.returncode)

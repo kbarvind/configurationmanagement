@@ -10,6 +10,8 @@ from app.boxconfig.parsers.steps import StepParser
 from app.boxconfig.executors.step import StepExecutor
 from app.utils.module.moduleutil import ModuleUtils
 import app
+from app.boxconfig.executors.process import NativeProcessRequest,\
+    NativeProcessExecutor
 
 
 class BoxConfig(object):
@@ -60,3 +62,14 @@ class BoxConfig(object):
         
         stepexecutor = StepExecutor(stepparser)
         stepexecutor.process()
+        
+        nativeprocessrequest = NativeProcessRequest()
+        nativeprocessrequest.setcommand("apt-get update")
+        
+        native_process_executor = NativeProcessExecutor(nativeprocessrequest)
+        response = native_process_executor.execute()
+        
+        print(response.getstdout())
+        
+        
+        
