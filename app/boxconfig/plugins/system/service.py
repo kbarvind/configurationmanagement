@@ -40,10 +40,10 @@ class Service(BoxConfigPlugin):
         response = self.executecommand(command)
         
         if response.getcontainsexception():
-            False
+            return False
             
         if response.getreturncode() != 0:
-            False
+            return False
             
         return True
     
