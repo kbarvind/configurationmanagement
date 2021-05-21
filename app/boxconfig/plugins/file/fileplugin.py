@@ -44,7 +44,7 @@ class FilePlugin(BoxConfigPlugin):
             if File.checkIfPathExists(path):
                 print("Skipping: Directory already exists in path "+path)
                 return
-            os.makedirs(path,parents=True, exist_ok=True)
+            os.makedirs(path, exist_ok=True)
         else:
             try:
                 File.touch(path)
