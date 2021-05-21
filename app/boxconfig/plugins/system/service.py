@@ -27,9 +27,12 @@ class Service(BoxConfigPlugin):
         
         if action == 'start':
             return self.start(service)
+        elif action == 'stop':
+            return self.stop(service)
+        elif action == 'restart':
+            return self.restart(service)
         else:
             raise StepExecutionException("Action " + action + " not supported")
-        
         
     def isrunning(self, service):
         
@@ -43,17 +46,14 @@ class Service(BoxConfigPlugin):
             False
             
         return True
-        
     
     def start(self, service):
         
         if self.isrunning(service):
-            return StepExecutionResponse.getSuccessResponse("Skipping Service "+service+" is already running")
-            
+            return StepExecutionResponse.getSuccessResponse("Skipping Service " + service + " is already running")
         
         command = "systemctl start " + service
         response = self.executecommand(command)
-        
         
         if response.getcontainsexception():
             raise StepExecutionException("Error while starting service " + service + " : " + response.getexception())
@@ -61,6 +61,34 @@ class Service(BoxConfigPlugin):
         if response.getreturncode() != 0:
             raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
         
+        return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
+    
+    def restart(self, service):
+        
+        command = "systemctl restart " + service
+        response = self.executecommand(command)
+        
+        if response.getcontainsexception():
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getexception())
+        
+        if response.getreturncode() != 0:
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
+        
+        return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
+    
+    def stop(self, service):
+        
+        if not self.isrunning(service):
+            return StepExecutionResponse.getSuccessResponse("Skipping Service " + service + " is not running already")
+        
+        command = "systemctl stop " + service
+        response = self.executecommand(command)
+        
+        if response.getcontainsexception():
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getexception())
+        
+        if response.getreturncode() != 0:
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
         
         return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
     
