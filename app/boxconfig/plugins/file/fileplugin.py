@@ -35,7 +35,6 @@ class FilePlugin(BoxConfigPlugin):
         fileexists = File.checkIfPathExists(path)
         
         if fileexists:
-            print("File "+path+" already available so skipping")
             return StepExecutionResponse.getSuccessResponse("File "+path+" already available so skipping")
         
         mode = None
@@ -46,7 +45,6 @@ class FilePlugin(BoxConfigPlugin):
         
         if mode == "folder":
             if File.checkIfPathExists(path):
-                print("Skipping: Directory already exists in path "+path)
                 return StepExecutionResponse.getSuccessResponse("Skipping: Directory already exists in path "+path)
             os.makedirs(path, exist_ok=True)
             return StepExecutionResponse.getSuccessResponse("Successfully created folder in "+path)

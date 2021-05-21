@@ -60,7 +60,6 @@ class AptGetPlugin(BoxConfigPlugin):
     def install(self, package):
         
         if self.isalreadyinstalled(package):
-            print("Package " + package + " already installed")
             return StepExecutionResponse.getSuccessResponse("Package " + package + " already installed")
         
         response = self.executecommand("apt-get -y update && apt-get -y install " + package)

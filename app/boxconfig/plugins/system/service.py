@@ -48,8 +48,8 @@ class Service(BoxConfigPlugin):
     def start(self, service):
         
         if self.isrunning(service):
-            print("Skipping Service "+service+" is already running")
-            return
+            return StepExecutionResponse.getSuccessResponse("Skipping Service "+service+" is already running")
+            
         
         command = "systemctl start " + service
         response = self.executecommand(command)
