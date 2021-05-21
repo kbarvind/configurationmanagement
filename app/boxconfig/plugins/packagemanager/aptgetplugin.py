@@ -7,6 +7,7 @@ from app.boxconfig.plugin.plugindecorator import BoxConfigPlugin, Plugin
 from app.utils.os.osinformation import OSInfo
 from app.boxconfig.executors.process import NativeProcessRequest, \
     NativeProcessExecutor
+from _struct import pack
 
 
 @Plugin
@@ -45,7 +46,24 @@ class AptGetPlugin(BoxConfigPlugin):
         else:
             raise Exception("State " + state + " is not valid")
     
+    
+    def isalreadyinstalled(self,package):
+        
+        response = self.executecommand("apt -qq list " + package)
+        
+        if len(response.getstdout()) == 0:
+            return False
+        else:
+            return True
+        
+    
+    
     def install(self, package):
+        
+        if self.isalreadyinstalled(package):
+            print("Package "+package+" already installed")
+            return
+        
         response = self.executecommand("apt-get -y update && apt-get -y install " + package)
         
         if response.getcontainsexception():

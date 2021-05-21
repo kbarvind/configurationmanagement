@@ -27,8 +27,29 @@ class Service(BoxConfigPlugin):
             self.start(service)
         else:
             raise Exception("Action " + action + " not supported")
+        
+        
+    def isrunning(self, service):
+        
+        command = "systemctl status " + service
+        response = self.executecommand(command)
+        
+        response.printresponse()
+        
+        if response.getcontainsexception():
+            False
+            
+        if response.getreturncode() != 0:
+            False
+            
+        return True
+        
     
     def start(self, service):
+        
+        if self.isrunning(service):
+            print("Skipping Service "+service+" is already running")
+            return
         
         command = "systemctl start " + service
         response = self.executecommand(command)
