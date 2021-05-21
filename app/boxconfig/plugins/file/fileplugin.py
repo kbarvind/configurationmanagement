@@ -6,6 +6,7 @@ Created on 20-May-2021
 from app.boxconfig.plugin.plugindecorator import Plugin, BoxConfigPlugin
 from app.utils.os.file import File
 import os
+from app.utils.os.osinformation import OSInfo
 
 @Plugin
 class FilePlugin(BoxConfigPlugin):
@@ -40,7 +41,10 @@ class FilePlugin(BoxConfigPlugin):
         
         
         if mode == "folder":
-            os.mkdir(path)
+            if File.checkIfPathExists(path):
+                print("Skipping: Directory already exists in path "+path)
+                return
+            os.mkdir(path,parents=True, exist_ok=True)
         else:
             try:
                 File.touch(path)
