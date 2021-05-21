@@ -46,14 +46,11 @@ class AptGetPlugin(BoxConfigPlugin):
             raise Exception("State " + state + " is not valid")
     
     def install(self, package):
-        response = self.executecommand("apt-get update && apt-get install " + package)
+        response = self.executecommand("apt-get -y update && apt-get -y install " + package)
         
         if response.getcontainsexception():
             raise Exception("Error while installing package " + package + " : " + response.getexception())
         
-        print(response.getreturncode())
-        print(response.getstderr())
-        print(response.getstdout())
         
         if response.getreturncode() != 0:
             raise Exception("Error while installing package " + package + " : " + response.getstderr())
