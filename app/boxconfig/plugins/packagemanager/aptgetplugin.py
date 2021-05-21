@@ -33,7 +33,7 @@ class AptGetPlugin(BoxConfigPlugin):
         
         distribution = linuxdistribution[0].lower()
         
-        if distribution != 'ubuntu' or distribution != 'debian':
+        if distribution != 'ubuntu' and distribution != 'debian':
             print("Skipping since plugin can only be applied to debian or ubuntu")
             return
         
