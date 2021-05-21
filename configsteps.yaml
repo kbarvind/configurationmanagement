@@ -15,4 +15,9 @@ steps:
     config:
        package: apache2
        state: install
+       
+  - plugin: service
+    config:
+       service: apache2
+       action: start
    
