@@ -51,9 +51,9 @@ class AptGetPlugin(BoxConfigPlugin):
         if response.getcontainsexception():
             raise Exception("Error while installing package " + package + " : " + response.getexception())
         
-        print(response.getreturncode)
-        print(response.getstderr)
-        print(response.getstdout)
+        print(response.getreturncode())
+        print(response.getstderr())
+        print(response.getstdout())
         
         if response.getreturncode() != 0:
             raise Exception("Error while installing package " + package + " : " + response.getstderr())
@@ -67,7 +67,8 @@ class AptGetPlugin(BoxConfigPlugin):
         
         native_process_executor = NativeProcessExecutor(nativeprocessrequest)
         try:
-            return native_process_executor.execute()
+            response =  native_process_executor.execute()
+            return response
         except:
             raise Exception("Error while executing command")
         
