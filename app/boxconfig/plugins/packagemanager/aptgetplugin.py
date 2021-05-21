@@ -53,6 +53,7 @@ class AptGetPlugin(BoxConfigPlugin):
         
         
         if response.getreturncode() != 0:
+            print(response.getstdout())
             raise Exception("Error while installing package " + package + " : " + response.getstderr())
         
         print(response.getstdout())
