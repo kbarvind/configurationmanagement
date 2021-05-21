@@ -44,5 +44,4 @@ class StepExecutor(object):
             except Exception as ex:
                 print(ex)
                 sys.exit()   
-            print("-----------------------------------------------")
             
