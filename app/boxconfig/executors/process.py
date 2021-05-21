@@ -94,6 +94,15 @@ class NativeProcessResponse():
     exception = None
     containsexception = False
     
+    def printresponse(self):
+        
+        if not self.containsexception:
+            print("Return Code : "+str(self.getreturncode()))
+            print("Std Output : "+self.getstdout())
+            print("Std Error : "+self.getstderr())
+        else:
+            print(self.getexception())
+    
     def setcontainsexception(self, containsexception):
         self.containsexception = containsexception
         
