@@ -6,6 +6,8 @@ Created on 21-May-2021
 from app.boxconfig.plugin.plugindecorator import Plugin, BoxConfigPlugin
 from app.boxconfig.executors.process import NativeProcessRequest, \
     NativeProcessExecutor
+from app.boxconfig.model.response import StepExecutionResponse
+from app.boxconfig.model.exception import StepExecutionException
 
 
 @Plugin
@@ -24,17 +26,15 @@ class Service(BoxConfigPlugin):
         service = config['service']
         
         if action == 'start':
-            self.start(service)
+            return self.start(service)
         else:
-            raise Exception("Action " + action + " not supported")
+            raise StepExecutionException("Action " + action + " not supported")
         
         
     def isrunning(self, service):
         
         command = "systemctl status " + service
         response = self.executecommand(command)
-        
-        response.printresponse()
         
         if response.getcontainsexception():
             False
@@ -54,17 +54,15 @@ class Service(BoxConfigPlugin):
         command = "systemctl start " + service
         response = self.executecommand(command)
         
-        response.printresponse()
         
         if response.getcontainsexception():
-            raise Exception("Error while starting service " + service + " : " + response.getexception())
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getexception())
         
         if response.getreturncode() != 0:
-            print(response.getstdout())
-            raise Exception("Error while starting service " + service + " : " + response.getstderr())
+            raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
         
         
-        print("Service " + service + " started")
+        return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
     
     def executecommand(self, command):
         

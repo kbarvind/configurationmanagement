@@ -7,6 +7,8 @@ from app.boxconfig.plugin.plugindecorator import Plugin, BoxConfigPlugin
 from app.utils.os.file import File
 import os
 from app.utils.os.osinformation import OSInfo
+from app.boxconfig.model.response import StepExecutionResponse
+from app.boxconfig.model.exception import StepExecutionException
 
 @Plugin
 class FilePlugin(BoxConfigPlugin):
@@ -22,7 +24,9 @@ class FilePlugin(BoxConfigPlugin):
         config =  kwargs.get('config', {})
         self.validate(config)
         if config['state'] == 'create':
-            self.createfile(config)
+            return self.createfile(config)
+        else:
+            return StepExecutionResponse.getErrorResponse("State "+config['state']+" not valid")
     
     
     def createfile(self,config):
@@ -32,7 +36,7 @@ class FilePlugin(BoxConfigPlugin):
         
         if fileexists:
             print("File "+path+" already available so skipping")
-            return
+            return StepExecutionResponse.getSuccessResponse("File "+path+" already available so skipping")
         
         mode = None
         
@@ -43,23 +47,24 @@ class FilePlugin(BoxConfigPlugin):
         if mode == "folder":
             if File.checkIfPathExists(path):
                 print("Skipping: Directory already exists in path "+path)
-                return
+                return StepExecutionResponse.getSuccessResponse("Skipping: Directory already exists in path "+path)
             os.makedirs(path, exist_ok=True)
+            return StepExecutionResponse.getSuccessResponse("Successfully created folder in "+path)
         else:
             try:
                 File.touch(path)
+                return StepExecutionResponse.getSuccessResponse("Successfully created file "+path)
             except Exception as ex:
-                print(ex)
-                raise Exception("Could not create file in path "+path)
+                raise StepExecutionException("Could not create file in path "+path,exeception=ex)
         
         
         
     def validate(self,config):
         
         if 'state' not in config:
-            raise Exception("State is not available for executing file plugin")
+            raise StepExecutionException("State is not available for executing file plugin")
         
         if 'path' not in config:
-            raise Exception("Path is not available for executing file plugin")
+            raise StepExecutionException("Path is not available for executing file plugin")
             
         

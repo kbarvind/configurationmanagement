@@ -8,6 +8,8 @@ from app.utils.os.osinformation import OSInfo
 from app.boxconfig.executors.process import NativeProcessRequest, \
     NativeProcessExecutor
 from _struct import pack
+from app.boxconfig.model.exception import StepExecutionException
+from app.boxconfig.model.response import StepExecutionResponse
 
 
 @Plugin
@@ -24,30 +26,29 @@ class AptGetPlugin(BoxConfigPlugin):
         self.validate(config)
         
         if OSInfo.getPlatformSystem() != 'linux':
-            raise Exception("package-apt can be applied only for linux debian platform")
+            raise StepExecutionException("package-apt can be applied only for linux debian platform")
         
         linuxdistribution = list(OSInfo.getPlatformLinuxDistribution())
         
         if len(linuxdistribution) == 0:
-            print("Skipping since plugin can only be applied to debian or ubuntu")
+            StepExecutionResponse.getSuccessResponse("Skipping since plugin can only be applied to debian or ubuntu")
             return
         
         distribution = linuxdistribution[0].lower()
         
         if distribution != 'ubuntu' and distribution != 'debian':
-            print("Skipping since plugin can only be applied to debian or ubuntu")
+            StepExecutionResponse.getSuccessResponse("Skipping since plugin can only be applied to debian or ubuntu")
             return
         
         state = config['state']
         package = config['package']
         
         if state == 'install':
-            self.install(package)
+            return self.install(package)
         else:
-            raise Exception("State " + state + " is not valid")
+            raise StepExecutionException("State " + state + " is not valid")
     
-    
-    def isalreadyinstalled(self,package):
+    def isalreadyinstalled(self, package):
         
         response = self.executecommand("apt -qq list " + package)
         
@@ -55,26 +56,22 @@ class AptGetPlugin(BoxConfigPlugin):
             return False
         else:
             return True
-        
-    
     
     def install(self, package):
         
         if self.isalreadyinstalled(package):
-            print("Package "+package+" already installed")
-            return
+            print("Package " + package + " already installed")
+            return StepExecutionResponse.getSuccessResponse("Package " + package + " already installed")
         
         response = self.executecommand("apt-get -y update && apt-get -y install " + package)
         
         if response.getcontainsexception():
-            raise Exception("Error while installing package " + package + " : " + response.getexception())
-        
+            raise StepExecutionException("Error while installing package " + package + " : " + response.getexception())
         
         if response.getreturncode() != 0:
-            print(response.getstdout())
-            raise Exception("Error while installing package " + package + " : " + response.getstderr())
+            raise StepExecutionException("Error while installing package " + package + " : " + response.getstderr())
         
-        print(response.getstdout())
+        return StepExecutionResponse.getSuccessResponse("Package " + package + " successfully installed", description=response.getstdout())
     
     def executecommand(self, command):
         
@@ -83,7 +80,7 @@ class AptGetPlugin(BoxConfigPlugin):
         
         native_process_executor = NativeProcessExecutor(nativeprocessrequest)
         try:
-            response =  native_process_executor.execute()
+            response = native_process_executor.execute()
             return response
         except:
             raise Exception("Error while executing command")
@@ -91,7 +88,7 @@ class AptGetPlugin(BoxConfigPlugin):
     def validate(self, config):
         
         if 'package' not in config:
-            raise Exception("Package Name configuration is not available in configuration")
+            raise StepExecutionException("Package Name configuration is not available in configuration")
         
         if 'state' not in config:
-            raise Exception("State configuration is not available in configuration")
+            raise StepExecutionException("State configuration is not available in configuration")

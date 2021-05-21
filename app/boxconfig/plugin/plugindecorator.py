@@ -14,7 +14,7 @@ class BoxConfigPlugin():
     
     def execute(self,**kwargs):
         pass
-
+    
 
 
 class Plugin(object):
