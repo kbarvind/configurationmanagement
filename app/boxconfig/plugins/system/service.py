@@ -74,7 +74,7 @@ class Service(BoxConfigPlugin):
         if response.getreturncode() != 0:
             raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
         
-        return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
+        return StepExecutionResponse.getSuccessResponse("Service " + service + " restarted", description=response.getstdout())
     
     def stop(self, service):
         
@@ -90,7 +90,7 @@ class Service(BoxConfigPlugin):
         if response.getreturncode() != 0:
             raise StepExecutionException("Error while starting service " + service + " : " + response.getstderr())
         
-        return StepExecutionResponse.getSuccessResponse("Service " + service + " started", description=response.getstdout())
+        return StepExecutionResponse.getSuccessResponse("Service " + service + " stopped", description=response.getstdout())
     
     def executecommand(self, command):
         
