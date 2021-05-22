@@ -1,0 +1,19 @@
+---
+
+vars:
+  name: arvind
+  place: Karur
+  
+steps:
+  - plugin: file
+    config:
+       path: /Users/kbarvind/Documents/Work/Lab1
+       state: create
+       mode: folder
+       
+  - plugin: filecopy
+    config:
+       name: index.php
+       destination: /Users/kbarvind/Documents/Work/Lab1
+       
+   

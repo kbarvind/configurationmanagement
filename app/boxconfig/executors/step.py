@@ -17,7 +17,7 @@ class StepExecutor(object):
     def __init__(self, stepparser):
         self.stepparser = stepparser
         
-    def process(self):
+    def process(self, **kwargs):
         
         steps = self.stepparser.getsteps()
         
@@ -28,7 +28,11 @@ class StepExecutor(object):
             plugin = BoxConfigPluginFactory.getPlugin(step.getplugin())
             params = {
                 "config" : step.getconfig()
-                } 
+                }
+            
+            for key, value in kwargs.items():
+                params[key] = value
+            
             try:
                 response = plugin.execute(**params)
                 if not isinstance(response, StepExecutionResponse):

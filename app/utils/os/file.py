@@ -16,7 +16,6 @@ class File(object):
     @staticmethod
     def getFilesinDirectory(dir_path,file_extension=None):
         
-        File.log.info("searching for : "+file_extension+" in folder path "+dir_path)
         if File.checkIfPathExists(dir_path) == False:
             raise Exception("Path "+dir_path+" does not exists")
         
@@ -47,6 +46,10 @@ class File(object):
     @staticmethod
     def checkIsFile(filePath):
         return os.path.isfile(filePath)
+    
+    @staticmethod
+    def getdirectoryoffile(file):
+        return os.path.dirname(file)
 
     @staticmethod
     def checkIsDir(dirPath):

@@ -20,6 +20,7 @@ class BoxConfig(object):
     '''
     def __init__(self, filepath):
         self.file = filepath
+        self.filedirectory = None
         self.filecontent = None
         self.configyaml = None
         self.init()
@@ -38,6 +39,7 @@ class BoxConfig(object):
         
         try:
             filehandler = FileHandler()
+            self.filedirectory = File.getdirectoryoffile(self.file)
             self.filecontent = filehandler.readFile(self.file)
         except Exception:
             raise Exception("Error while reading file from " + self.file) from None
@@ -61,7 +63,15 @@ class BoxConfig(object):
         stepparser.process()
         
         stepexecutor = StepExecutor(stepparser)
-        stepexecutor.process()
+        stepexecutor.process(**self.getCommonParameters())
+        
+        
+    def getCommonParameters(self):
+        
+        parameters = {
+                "filedirectory" : self.filedirectory 
+            }
+        return parameters
         
         
     def testnativeprocess(self):
