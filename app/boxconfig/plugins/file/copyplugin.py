@@ -7,6 +7,7 @@ from app.boxconfig.plugin.plugindecorator import Plugin, BoxConfigPlugin
 from app.boxconfig.model.exception import StepExecutionException
 from app.utils.os.file import File
 from app.boxconfig.model.response import StepExecutionResponse
+import shutil
 
 
 @Plugin
@@ -43,6 +44,11 @@ class FileCopy(BoxConfigPlugin):
         if not File.checkIsDir(destination):
             raise StepExecutionException("Destination directory "+destination+" does not exists")
         
+        
+        try:
+            shutil.copy(filespec, destination)
+        except Exception as ex:
+            StepExecutionException("Could not copy file to "+destination, exeception=ex)
         
         return StepExecutionResponse.getSuccessResponse("File copied successfully to "+destination)
         
