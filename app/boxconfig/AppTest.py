@@ -16,7 +16,8 @@ def testssh():
     
     sshservice = SSHService(connector,hostname1,username,password=password)
     response = sshservice.executecommand("boxconfig")
-    
+    print(response.geterrorstring())
+    print(response.getoutputstring())
 
 
 if __name__ == '__main__':

@@ -3,6 +3,8 @@ Created on 23-May-2021
 
 @author: kbarvind
 '''
+from app.utils.common.string import StringUtils
+
 
 class SSHResponse():
     
@@ -10,10 +12,8 @@ class SSHResponse():
         self.output = None
         self.error = None
         
-        
     def setoutput(self, output):
         self.output = output
-    
     
     def getoutput(self):
         return self.output
@@ -23,6 +23,27 @@ class SSHResponse():
         
     def geterror(self):
         return self.error
+    
+    def getoutputstring(self):
+        
+        if self.output is None:
+            return
+        
+        value = ""
+        for output in self.output:
+            value += StringUtils.removenewlinecharacter(output)
+        return value
+    
+    def geterrorstring(self):
+        
+        if self.error is None:
+            return
+        
+        value = ""
+        for error in self.error:
+            value += StringUtils.removenewlinecharacter(error)
+        return value
+        
 
 class SSHConnector(object):
     '''
@@ -45,7 +66,7 @@ class SSHConnector(object):
     def connect_execute(self):
         pass
     
-    def executecommand(self, command, commandinput = None):
+    def executecommand(self, command, commandinput=None):
         pass
     
     def transferfile(self, source, destination):
