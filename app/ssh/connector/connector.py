@@ -4,6 +4,7 @@ Created on 23-May-2021
 @author: kbarvind
 '''
 from app.utils.common.string import StringUtils
+from app.utils.os.osinformation import OSInfo
 
 
 class SSHResponse():
@@ -44,6 +45,16 @@ class SSHResponse():
         value = ""
         for error in self.error:
             value += StringUtils.removenewlinecharacter(error)
+        return value
+    
+    def getPrintableError(self):
+        if self.error is None:
+            return
+        
+        value = ""
+        for error in self.error:
+            value += StringUtils.removenewlinecharacter(error)
+            value += OSInfo.getLineSeperator()
         return value
         
 

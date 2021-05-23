@@ -51,6 +51,10 @@ class OSInfo(object):
     def getEnvironment(var_name):
         return os.getenv(var_name, None)
     
+    @staticmethod
+    def getLineSeperator():
+        return os.linesep
+    
 
 
 
