@@ -17,6 +17,7 @@ setup(
           "jinja2",
           "PyYAML",
           "paramiko",
-          "paramiko[gssapi]"
+          "paramiko[gssapi]",
+          "gssapi"
           ]
       )
