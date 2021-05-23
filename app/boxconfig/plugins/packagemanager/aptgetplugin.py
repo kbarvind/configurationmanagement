@@ -45,7 +45,7 @@ class AptGetPlugin(BoxConfigPlugin):
         if state == 'install':
             multipackageinstallation = False
         
-            if isinstance(package, str):
+            if isinstance(package, list):
                 multipackageinstallation = True
             
             if not multipackageinstallation:
