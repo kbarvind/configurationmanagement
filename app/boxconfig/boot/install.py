@@ -35,9 +35,6 @@ class BoxConfigInstallation(object):
     
     def install(self):
         
-        if self.checkifalreadyinstalled():
-            print("BoxConfig cli is already installed")
-            return 
         self.downloadbootstrap()
         self.makeshellscriptexecutable()
         self.executebootstrap()
