@@ -13,8 +13,8 @@ setup(
         'console_scripts': ['boxconfig=app.cli.configmanagercli:climain'],
         },
       install_requires = [
-          "pip",
-          "setuptools",
+          "pip>=18",
+          "setuptools>=38.3",
           "sphinx",
           "click",
           "jinja2",
