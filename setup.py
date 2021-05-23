@@ -21,7 +21,6 @@ setup(
           "PyYAML",
           "paramiko",
           "paramiko[gssapi]",
-          "gssapi",
-          "setuptools-rust"
+          "gssapi"
           ]
       )
