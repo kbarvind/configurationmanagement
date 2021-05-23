@@ -19,9 +19,9 @@ steps:
           - libapache2-mod-php
        state: install
        
-  - plugin: filecopy
+  - plugin: service
     config:
-       name: index.php
-       destination: /Users/kbarvind/Documents/Work/Lab1
+       service: apache2
+       action: restart
        
    
