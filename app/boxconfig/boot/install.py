@@ -18,6 +18,15 @@ class BoxConfigInstallation(object):
         self.sshservice = SSHService("paramiko",self.hostname,self.username,password=self.password)
     
     
+    def install(self):
+        
+        if self.checkifalreadyinstalled():
+            print("BoxConfig cli is already installed")
+            return 
+        self.downloadbootstrap()
+        self.makeshellscriptexecutable()
+        self.executebootstrap()
+    
     
     def downloadbootstrap(self):
         
@@ -25,8 +34,7 @@ class BoxConfigInstallation(object):
         
         response = self.sshservice.executecommand(command)
         
-        print(response.getoutputstring())
-        print(response.geterrorstring())
+        print("Downloaded Bootstrap Script")
         
         
     def makeshellscriptexecutable(self):
@@ -35,8 +43,6 @@ class BoxConfigInstallation(object):
         
         response = self.sshservice.executecommand(command)
         
-        print(response.getoutputstring())
-        print(response.geterrorstring())
     
     
     def executebootstrap(self):
@@ -45,8 +51,22 @@ class BoxConfigInstallation(object):
         
         response = self.sshservice.executecommand(command)
         
-        print(response.getoutputstring())
-        print(response.geterrorstring())
+        print("Installed Boxconfig")
+        
+    def checkifalreadyinstalled(self):
+        
+        command = "boxconfig --help"
+        
+        response = self.sshservice.executecommand(command)
+        
+        tocheck = "command not found"
+        
+        if tocheck in response.getoutputstring():
+            return False
+        
+        return True
+        
+        
         
         
         

@@ -6,10 +6,17 @@ Created on 19-May-2021
 import click
 from app.boxconfig.Main import BoxConfig
 import sys
+from app.boxconfig.boot.install import BoxConfigInstallation
 
-@click.command()
+
+
+@click.group()
+def boxconfigcli():
+    pass
+
+@boxconfigcli.command()
 @click.option("--file", "-f", help="configstepfile")
-def cli(file):
+def apply(file):
     if file is None:
         raise Exception("Configuration steps not provided")
     
@@ -21,6 +28,23 @@ def cli(file):
         sys.exit(1)
         
 
+@boxconfigcli.command()
+@click.option("--hostname", "-h", prompt="Hostname to install boxconfig", required=True)
+@click.option("--username", "-u", prompt="SSH User name", required=True)
+@click.password_option()
+def install(hostname, username, password):
+    
+    try:
+        boxconfiguration = BoxConfigInstallation(hostname, username, password)
+        boxconfiguration.install()
+    except Exception as ex:
+        print(ex)
+    
+
+
+def climain():
+    boxconfigcli()
+
 
 if __name__ == '__main__':
-    cli()
+    climain()
