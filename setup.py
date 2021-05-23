@@ -13,11 +13,15 @@ setup(
         'console_scripts': ['boxconfig=app.cli.configmanagercli:climain'],
         },
       install_requires = [
+          "pip",
+          "setuptools",
+          "sphinx",
           "click",
           "jinja2",
           "PyYAML",
           "paramiko",
           "paramiko[gssapi]",
-          "gssapi"
+          "gssapi",
+          "setuptools-rust"
           ]
       )
