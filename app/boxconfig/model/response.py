@@ -15,7 +15,16 @@ class StepExecutionResponse(object):
         self.iserror = False
         self.output = ""
         self.error = ""
+        self.responses = []
+        self.multioutput = False
         self.description = description
+        
+    @staticmethod
+    def getSuccessMultiResponse():
+        response = StepExecutionResponse()
+        response.setIsError(False)
+        response.multioutput = True
+        return response
     
     @staticmethod
     def getSuccessResponse(output, description=None):
@@ -51,6 +60,10 @@ class StepExecutionResponse(object):
     
     def setOutput(self, output):
         self.output = output
+        
+        
+    def addResponse(self, response):
+        self.responses.append(response)
         
     def setError(self, error):
         self.error = error

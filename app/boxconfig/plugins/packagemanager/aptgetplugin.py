@@ -7,7 +7,6 @@ from app.boxconfig.plugin.plugindecorator import BoxConfigPlugin, Plugin
 from app.utils.os.osinformation import OSInfo
 from app.boxconfig.executors.process import NativeProcessRequest, \
     NativeProcessExecutor
-from _struct import pack
 from app.boxconfig.model.exception import StepExecutionException
 from app.boxconfig.model.response import StepExecutionResponse
 
@@ -44,7 +43,20 @@ class AptGetPlugin(BoxConfigPlugin):
         package = config['package']
         
         if state == 'install':
-            return self.install(package)
+            multipackageinstallation = False
+        
+            if isinstance(package, str):
+                multipackageinstallation = True
+            
+            if not multipackageinstallation:
+                return self.install(package)
+            else:
+                packages = package
+                stepresponse = StepExecutionResponse.getSuccessMultiResponse()
+                for packagename in packages:
+                    response = self.install(packagename)
+                    stepresponse.addResponse(response)
+                return stepresponse
         else:
             raise StepExecutionException("State " + state + " is not valid")
     
