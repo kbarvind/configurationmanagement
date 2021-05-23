@@ -21,10 +21,10 @@ class ParamikoSSHProvider(SSHConnector):
         
         if not self.ispassword:
             raise Exception("SSH Key Support is not available ")
-        
+                
         self.client = SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.client.connect(hostname=self.hostname, username=self.username, password=self.password)
+        self.client.connect(self.hostname, username=self.username, password=self.password)
         
     def executecommand(self, command, commandinput=None):
         
@@ -36,6 +36,8 @@ class ParamikoSSHProvider(SSHConnector):
         sshresponse = SSHResponse()
         sshresponse.setoutput(stdout.readlines())
         sshresponse.seterror(stderr.readlines())
+        
+        return sshresponse
         
     def transferfile(self, source, destination):
         

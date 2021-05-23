@@ -56,6 +56,7 @@ class SSHConnector(object):
     
     def connect(self, **kwargs):
         
+        self.init()
         self.hostname = kwargs.get('hostname', self.hostname)
         self.username = kwargs.get('username', self.username)
         self.password = kwargs.get('password', self.password)
