@@ -67,7 +67,10 @@ class StepExecutionResponse(object):
         
     def addResponse(self, response):
         self.responses.append(response)
-        
+    
+    def getresponses(self):
+        return self.responses
+    
     def setError(self, error):
         self.error = error
         

@@ -51,7 +51,7 @@ class StepExecutor(object):
         if not responses.getismultiresponse():
             self.printresponse(responses)
         else:
-            for response in responses:
+            for response in responses.getresponses():
                 if not isinstance(response, StepExecutionResponse):
                     print("One of Response from  "+step.getplugin()+" is not instance of StepExecutionResponse")
                     sys.exit()
