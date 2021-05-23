@@ -38,14 +38,29 @@ class StepExecutor(object):
                 if not isinstance(response, StepExecutionResponse):
                     print("Response from plugin "+step.getplugin()+" is not instance of StepExecutionResponse")
                     sys.exit()
-                print(">> "+response.getOutput())
-                if response.getdescription() is not None:
-                    print("")
-                    print(response.getdescription())
+                self.processresponse(response, step)
             except StepExecutionException as stepexception:
                 print(">> Error: "+str(stepexception))
                 sys.exit()
             except Exception as ex:
                 print(ex)
                 sys.exit()   
+    
+    
+    def processresponse(self, responses, step):
+        if not responses.getismultiresponse():
+            self.printresponse(responses)
+        else:
+            for response in responses:
+                if not isinstance(response, StepExecutionResponse):
+                    print("One of Response from  "+step.getplugin()+" is not instance of StepExecutionResponse")
+                    sys.exit()
+                self.printresponse(response)
+    
+    def printresponse(self, response):
+        print(">> "+response.getOutput())
+        if response.getdescription() is not None:
+            print("")
+            print(response.getdescription())
+                
             

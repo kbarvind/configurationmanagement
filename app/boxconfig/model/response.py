@@ -44,6 +44,9 @@ class StepExecutionResponse(object):
             response.description = description
         return response
     
+    def getismultiresponse(self):
+        return self.multioutput
+    
     def getdescription(self):
         return self.description
     
