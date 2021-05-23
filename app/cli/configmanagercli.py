@@ -39,7 +39,19 @@ def install(hostname, username, password):
         boxconfiguration.install()
     except Exception as ex:
         print(ex)
+
+
+@boxconfigcli.command()
+@click.option("--hostname", "-h", prompt="Hostname to install boxconfig", required=True)
+@click.option("--username", "-u", prompt="SSH User name", required=True)
+@click.password_option()
+def uninstall(hostname, username, password):
     
+    try:
+        boxconfiguration = BoxConfigInstallation(hostname, username, password)
+        boxconfiguration.uninstall()
+    except Exception as ex:
+        print(ex)
 
 
 def climain():

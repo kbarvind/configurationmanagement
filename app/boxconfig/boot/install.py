@@ -18,6 +18,21 @@ class BoxConfigInstallation(object):
         self.sshservice = SSHService("paramiko",self.hostname,self.username,password=self.password)
     
     
+    
+    def uninstall(self):
+        
+        if not self.checkifalreadyinstalled():
+            print("BoxConfig cli is not installed")
+            return
+            
+        command = "pip uninstall -y boxconfig"
+        
+        response = self.sshservice.executecommand(command)
+        
+        print("BoxConfig uninstalled Successfully")
+        
+        
+    
     def install(self):
         
         if self.checkifalreadyinstalled():
