@@ -4,6 +4,7 @@ Created on 23-May-2021
 @author: kbarvind
 '''
 from app.ssh.service.sshservice import SSHService
+from app.boxconfig.boot.install import BoxConfigInstallation
 
 
 def testssh():
@@ -14,11 +15,9 @@ def testssh():
     username = "root"
     password = "E6MVMOVVFLND77YAJAGTOGPP"
     
-    sshservice = SSHService(connector,hostname2,username,password=password)
-    response = sshservice.executecommand("uname -a")
-    print(response.geterrorstring())
-    print(response.getoutputstring())
-
+    
+    installation = BoxConfigInstallation(hostname1,username,password)
+    installation.executebootstrap()
 
 if __name__ == '__main__':
     testssh()
