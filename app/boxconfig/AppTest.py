@@ -14,8 +14,8 @@ def testssh():
     username = "root"
     password = "E6MVMOVVFLND77YAJAGTOGPP"
     
-    sshservice = SSHService(connector,hostname1,username,password=password)
-    response = sshservice.executecommand("boxconfig")
+    sshservice = SSHService(connector,hostname2,username,password=password)
+    response = sshservice.executecommand("uname -a")
     print(response.geterrorstring())
     print(response.getoutputstring())
 

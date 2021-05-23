@@ -31,6 +31,8 @@ class SSHResponse():
         
         value = ""
         for output in self.output:
+            if len(output.strip()) == 0:
+                continue
             value += StringUtils.removenewlinecharacter(output)
         return value
     
