@@ -11,5 +11,12 @@ setup(
       zip_safe=False,
       entry_points = {
         'console_scripts': ['boxconfig=app.cli.configmanagercli:climain'],
-        }
+        },
+      install_requires = [
+          "click",
+          "jinja2",
+          "PyYAML",
+          "paramiko",
+          "paramiko[gssapi]"
+          ]
       )
