@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Building code"
+
+./build.sh
+
 cd ..
 
 echo "copying artifacts"

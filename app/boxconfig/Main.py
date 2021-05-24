@@ -40,6 +40,8 @@ class BoxConfig(object):
         try:
             filehandler = FileHandler()
             self.filedirectory = File.getdirectoryoffile(self.file)
+            if len(self.filedirectory) ==0:
+                self.filedirectory = File.getcurrentworkingdirectory()
             self.filecontent = filehandler.readFile(self.file)
         except Exception:
             raise Exception("Error while reading file from " + self.file) from None

@@ -60,6 +60,10 @@ class File(object):
         return os.path.exists(path)
     
     @staticmethod
+    def getcurrentworkingdirectory():
+        return os.getcwd()
+    
+    @staticmethod
     def getRootDir():
         return os.path.dirname(sys.modules['__main__'].__file__)
     
