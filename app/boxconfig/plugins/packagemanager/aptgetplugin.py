@@ -64,6 +64,8 @@ class AptGetPlugin(BoxConfigPlugin):
         
         response = self.executecommand("apt -qq list " + package)
         
+        print("Is installed")
+        print(response.getstdout())
         if len(response.getstdout()) == 0:
             return False
         else:
