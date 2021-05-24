@@ -56,7 +56,16 @@ class SSHResponse():
             value += StringUtils.removenewlinecharacter(error)
             value += OSInfo.getLineSeperator()
         return value
+    
+    def getPrintableOutput(self):
+        if self.output is None:
+            return
         
+        value = ""
+        for output in self.output:
+            value += StringUtils.removenewlinecharacter(output)
+            value += OSInfo.getLineSeperator()
+        return value
 
 class SSHConnector(object):
     '''

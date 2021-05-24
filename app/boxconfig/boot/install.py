@@ -63,11 +63,8 @@ class BoxConfigInstallation(object):
         
         response = self.sshservice.executecommand(command)
         
-        error = response.getPrintableError()
-        if error is not None:
-            print(error)
-        else:
-            print("Installed Boxconfig")
+        print(response.getPrintableOutput())
+        print("Installed Boxconfig")
         
     def checkifalreadyinstalled(self):
         
